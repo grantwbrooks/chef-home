@@ -16,6 +16,8 @@
 		026BB1AC1F71CCE2007DCFF2 /* FoodListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026BB1AB1F71CCE2007DCFF2 /* FoodListTableViewController.swift */; };
 		026BB1AE1F71CCFB007DCFF2 /* FoodDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026BB1AD1F71CCFB007DCFF2 /* FoodDetailViewController.swift */; };
 		026BB1B01F71CD3A007DCFF2 /* CreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026BB1AF1F71CD3A007DCFF2 /* CreateViewController.swift */; };
+		C0929DA81F798E89003BF7AE /* AddFoodViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0929DA71F798E89003BF7AE /* AddFoodViewController.swift */; };
+		C0929DAA1F798EB5003BF7AE /* AddFoodDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0929DA91F798EB5003BF7AE /* AddFoodDelegate.swift */; };
 		C09927711F72109000AA88BB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C09927701F72109000AA88BB /* GoogleService-Info.plist */; };
 		C0F282621F7222D2006576A5 /* FoodModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F282611F7222D2006576A5 /* FoodModel.swift */; };
 		C0F282641F7247CF006576A5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C0F282631F7247CF006576A5 /* Main.storyboard */; };
@@ -40,6 +42,8 @@
 		3B3D74CFC8CB8DC668AF79FD /* Pods-FoodTrade.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FoodTrade.release.xcconfig"; path = "Pods/Target Support Files/Pods-FoodTrade/Pods-FoodTrade.release.xcconfig"; sourceTree = "<group>"; };
 		46A5CF390452373AAC8B4A2F /* Pods_FoodTrade.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FoodTrade.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A04966C35E151D20D6B9525B /* Pods-FoodTrade.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FoodTrade.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FoodTrade/Pods-FoodTrade.debug.xcconfig"; sourceTree = "<group>"; };
+		C0929DA71F798E89003BF7AE /* AddFoodViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFoodViewController.swift; sourceTree = "<group>"; };
+		C0929DA91F798EB5003BF7AE /* AddFoodDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFoodDelegate.swift; sourceTree = "<group>"; };
 		C09927701F72109000AA88BB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C0F282611F7222D2006576A5 /* FoodModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodModel.swift; sourceTree = "<group>"; };
 		C0F282631F7247CF006576A5 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -87,7 +91,8 @@
 				026BB1A91F71CA6A007DCFF2 /* CategoryCollectionViewController.swift */,
 				026BB1AB1F71CCE2007DCFF2 /* FoodListTableViewController.swift */,
 				026BB1AD1F71CCFB007DCFF2 /* FoodDetailViewController.swift */,
-				026BB1AF1F71CD3A007DCFF2 /* CreateViewController.swift */,
+				C0929DA71F798E89003BF7AE /* AddFoodViewController.swift */,
+				C0929DA91F798EB5003BF7AE /* AddFoodDelegate.swift */,
 				C0F282651F7247EB006576A5 /* RatingControl.swift */,
 				026BB19E1F71C003007DCFF2 /* Assets.xcassets */,
 				026BB1A01F71C003007DCFF2 /* LaunchScreen.storyboard */,
@@ -95,6 +100,7 @@
 				026BB19B1F71C003007DCFF2 /* FoodTrade.xcdatamodeld */,
 				C0F282611F7222D2006576A5 /* FoodModel.swift */,
 				C0F282671F7255CD006576A5 /* FoodListTableViewCell.swift */,
+				026BB1AF1F71CD3A007DCFF2 /* CreateViewController.swift */,
 			);
 			path = FoodTrade;
 			sourceTree = "<group>";
@@ -252,6 +258,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C0929DA81F798E89003BF7AE /* AddFoodViewController.swift in Sources */,
 				026BB1951F71C003007DCFF2 /* AppDelegate.swift in Sources */,
 				026BB1AA1F71CA6A007DCFF2 /* CategoryCollectionViewController.swift in Sources */,
 				026BB1B01F71CD3A007DCFF2 /* CreateViewController.swift in Sources */,
@@ -260,6 +267,7 @@
 				026BB1AE1F71CCFB007DCFF2 /* FoodDetailViewController.swift in Sources */,
 				C0F282681F7255CD006576A5 /* FoodListTableViewCell.swift in Sources */,
 				026BB19D1F71C003007DCFF2 /* FoodTrade.xcdatamodeld in Sources */,
+				C0929DAA1F798EB5003BF7AE /* AddFoodDelegate.swift in Sources */,
 				C0F282621F7222D2006576A5 /* FoodModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -124,7 +124,7 @@
         <!--Create View Controller-->
         <scene sceneID="Nap-hy-9oE">
             <objects>
-                <viewController id="ax6-Ti-HMV" userLabel="Create View Controller" customClass="CreateViewController" customModule="FoodTrade" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="ax6-Ti-HMV" userLabel="Create View Controller" customClass="AddFoodViewController" customModule="FoodTrade" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="At1-N8-XMu"/>
                         <viewControllerLayoutGuide type="bottom" id="i4A-Hn-fWS"/>

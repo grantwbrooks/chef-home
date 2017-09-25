@@ -14,10 +14,12 @@ class CreateViewController: UIViewController, UITextFieldDelegate, UIImagePicker
     
     var refFoods: DatabaseReference!
     var foodsList = [FoodModel]()
+    
+    
     var catName = String()
-
     var food = [Food]()
-    var managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    
+//    var managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     
 //    @IBOutlet weak var foodPicture: UIImageView!
@@ -33,29 +35,29 @@ class CreateViewController: UIViewController, UITextFieldDelegate, UIImagePicker
     
     @IBAction func saveButtonPressed(_ sender: UIBarButtonItem) {
         addFood()
-        //Add Item
-        let newItem = NSEntityDescription.insertNewObject(forEntityName: "Food", into: managedObjectContext) as! Food
-        newItem.name = nameTextField.text
-        newItem.category = categoryTextField.text
-        newItem.desc = descriptionTextField.text
-        newItem.price = Double(priceTextField.text!)!
-        newItem.chef = chefTextField.text
-//        newItem.orderBy = orderByTextField.text
-//        newItem.readyBy = readyByTextField.text
-        newItem.phoneNumber = phoneTextField.text
-        newItem.pickUpLocation = pickUpLocationTextField.text
-        newItem.pickUpLatitude = 0.0
-        newItem.pickUpLongitude = 0.0
-        
-        food.append(newItem)
-    
-        //Save the ScratchPad
-        do {
-            try managedObjectContext.save()
-        }
-        catch {
-            print("\(error)")
-        }
+//        //Add Item
+//        let newItem = NSEntityDescription.insertNewObject(forEntityName: "Food", into: managedObjectContext) as! Food
+//        newItem.name = nameTextField.text
+//        newItem.category = categoryTextField.text
+//        newItem.desc = descriptionTextField.text
+//        newItem.price = Double(priceTextField.text!)!
+//        newItem.chef = chefTextField.text
+////        newItem.orderBy = orderByTextField.text
+////        newItem.readyBy = readyByTextField.text
+//        newItem.phoneNumber = phoneTextField.text
+//        newItem.pickUpLocation = pickUpLocationTextField.text
+//        newItem.pickUpLatitude = 0.0
+//        newItem.pickUpLongitude = 0.0
+//        
+//        food.append(newItem)
+//    
+//        //Save the ScratchPad
+//        do {
+//            try managedObjectContext.save()
+//        }
+//        catch {
+//            print("\(error)")
+//        }
         
         funkyFood()
         _ = navigationController?.popToRootViewController(animated: true)
