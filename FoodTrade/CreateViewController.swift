@@ -10,24 +10,24 @@ import UIKit
 import CoreData
 import Firebase
 
-class CreateViewController: UIViewController {
+class CreateViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     
     var refFoods: DatabaseReference!
     var foodsList = [FoodModel]()
-    
-    
+    var catName = String()
+
     var food = [Food]()
     var managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     
-    @IBOutlet weak var foodPicture: UIImageView!
+//    @IBOutlet weak var foodPicture: UIImageView!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var categoryTextField: UITextField!
     @IBOutlet weak var descriptionTextField: UITextField!
     @IBOutlet weak var priceTextField: UITextField!
     @IBOutlet weak var chefTextField: UITextField!
-    @IBOutlet weak var orderByTextField: UITextField!
-    @IBOutlet weak var readyByTextField: UITextField!
+//    @IBOutlet weak var orderByTextField: UITextField!
+//    @IBOutlet weak var readyByTextField: UITextField!
     @IBOutlet weak var phoneTextField: UITextField!
     @IBOutlet weak var pickUpLocationTextField: UITextField!
     
@@ -58,12 +58,18 @@ class CreateViewController: UIViewController {
         }
         
         funkyFood()
-        _ = navigationController?.popViewController(animated: true)
+        _ = navigationController?.popToRootViewController(animated: true)
+//        _ = navigationController?.popViewController(animated: true)
     }
+    
     
    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+
+        categoryTextField.text = catName
+        
         
         refFoods = Database.database().reference().child("foods")
         
@@ -91,6 +97,7 @@ class CreateViewController: UIViewController {
                 }
             }
         })
+        print("array lenght", foodsList.count)
         
         // Do any additional setup after loading the view.
     }
@@ -123,6 +130,7 @@ class CreateViewController: UIViewController {
         ] as [String : Any]
         
         refFoods.child(key).setValue(food)
+        self.viewDidLoad()
     }
     
     override func didReceiveMemoryWarning() {

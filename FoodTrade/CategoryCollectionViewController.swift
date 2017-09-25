@@ -65,6 +65,7 @@ class CategoryCollectionViewController: UICollectionViewController {
     func funkyFood() {
         let foodItem: FoodModel
         
+        //category stuff
         var foodsCategory = [FoodModel]()
         for  item in foodsList{
             if item.category == "Salad" {
@@ -82,6 +83,34 @@ class CategoryCollectionViewController: UICollectionViewController {
     }
     
 
+    //  Stuff above will get removed
+    
+    
+    @IBAction func appetizerPressed(_ sender: UIButton) {
+        performSegue(withIdentifier: "showFoodList", sender: sender)
+    }
+    
+    @IBAction func saladPressed(_ sender: UIButton) {
+        performSegue(withIdentifier: "showFoodList", sender: sender)
+    }
+    
+    @IBAction func entreePressed(_ sender: UIButton) {
+        performSegue(withIdentifier: "showFoodList", sender: sender)
+    }
+    
+    @IBAction func dessertPressed(_ sender: UIButton) {
+        performSegue(withIdentifier: "showFoodList", sender: sender)
+    }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let fltc = segue.destination as! FoodListTableViewController
+        fltc.foodsList = foodsList
+        let cat = sender as! UIButton
+        fltc.foodCategory = cat
+    }
+    
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -115,17 +144,17 @@ class CategoryCollectionViewController: UICollectionViewController {
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return 0
+        return 1
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "catCell", for: indexPath)
     
         // Configure the cell
     

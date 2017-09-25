@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="VGe-rj-Ooi">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="VGe-rj-Ooi">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -74,9 +74,6 @@
                                     <constraint firstAttribute="width" constant="375" id="iJw-dQ-S0k"/>
                                     <constraint firstAttribute="height" constant="220" id="ufO-aC-rk6"/>
                                 </constraints>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="rBF-n0-Ir9" appends="YES" id="wqV-6p-fag"/>
-                                </connections>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="7Au-sG-s14">
                                 <rect key="frame" x="87" y="478" width="130" height="270"/>
@@ -238,25 +235,9 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Create" id="fK4-0x-RNt">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="6tP-2I-LZh">
-                            <connections>
-                                <action selector="saveButtonPressed:" destination="ax6-Ti-HMV" id="tXY-rF-y44"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="6tP-2I-LZh"/>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
-                    <connections>
-                        <outlet property="categoryTextField" destination="8ib-w4-bfb" id="IbZ-l3-Rw3"/>
-                        <outlet property="chefTextField" destination="p5y-ZY-epZ" id="082-6r-s26"/>
-                        <outlet property="descriptionTextField" destination="YIp-cP-V68" id="RWt-IO-x25"/>
-                        <outlet property="foodPicture" destination="6pD-pr-ggJ" id="Be3-XP-78n"/>
-                        <outlet property="nameTextField" destination="n2H-ey-AJ4" id="OnT-SR-6q8"/>
-                        <outlet property="orderByTextField" destination="fXB-7H-uIy" id="gZS-5x-hE0"/>
-                        <outlet property="phoneTextField" destination="0gu-vV-hZR" id="a5g-J2-nz6"/>
-                        <outlet property="pickUpLocationTextField" destination="ykw-Se-XWb" id="exJ-be-CvY"/>
-                        <outlet property="priceTextField" destination="P5D-ZF-gYJ" id="uHo-zx-hBI"/>
-                        <outlet property="readyByTextField" destination="R1p-er-IL2" id="stU-rq-J3n"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZdB-67-cTu" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="rBF-n0-Ir9">
