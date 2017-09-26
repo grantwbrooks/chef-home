@@ -198,6 +198,14 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9Uw-HE-QIC">
+                                <rect key="frame" x="16" y="102" width="382" height="329"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="ce3-AD-wCh" appends="YES" id="kqx-Ln-b17"/>
+                                </connections>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <gestureRecognizers/>
@@ -215,6 +223,7 @@
                         <outlet property="categoryTextField" destination="Zrb-FX-Czg" id="JZs-xs-Uzo"/>
                         <outlet property="chefTextField" destination="NsY-ae-RaE" id="KKj-ka-eK1"/>
                         <outlet property="descriptionTextField" destination="Zm9-mx-H2q" id="tey-YP-BAv"/>
+                        <outlet property="foodImage" destination="9Uw-HE-QIC" id="jvD-Tw-4My"/>
                         <outlet property="nameTextField" destination="1Jf-NC-UxJ" id="kYw-MH-RhE"/>
                         <outlet property="phoneTextField" destination="fex-U0-6ia" id="bAj-92-7Gh"/>
                         <outlet property="pickUpLocationTextField" destination="iMB-q0-XlW" id="ChF-sS-oll"/>
@@ -222,8 +231,13 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZdB-67-cTu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="ce3-AD-wCh">
+                    <connections>
+                        <action selector="selectImageFromPhotoLibrary:" destination="ax6-Ti-HMV" id="Kf3-kp-C5c"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1288" y="-100"/>
+            <point key="canvasLocation" x="1286.9565217391305" y="-100.2717391304348"/>
         </scene>
         <!--Food List Table View Controller-->
         <scene sceneID="AFi-4p-wK3">

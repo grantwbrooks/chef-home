@@ -10,6 +10,7 @@ class FoodModel{
     
     var id: String?
     var name: String?
+    var foodImageURL: String?
     var category: String?
     var desc: String?
     var price:Double?
@@ -18,10 +19,12 @@ class FoodModel{
     var pickUpLocation: String?
     var pickUpLatitude: Double?
     var pickUpLongitude: Double?
+//    var foodImage: Data?
     
-    init(id: String?, name: String?, category: String?, desc: String?, price: Double?, chef: String?, phoneNumber: String?, pickUpLocation: String?, pickUpLatitude: Double?, pickUpLongitude: Double?) {
+    init(id: String?, name: String?, foodImageURL: String?, category: String?, desc: String?, price: Double?, chef: String?, phoneNumber: String?, pickUpLocation: String?, pickUpLatitude: Double?, pickUpLongitude: Double?) {
         self.id = id
         self.name = name
+        self.foodImageURL = foodImageURL
         self.category = category
         self.desc = desc
         self.price = price

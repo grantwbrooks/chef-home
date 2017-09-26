@@ -43,6 +43,7 @@ class FoodListTableViewController: UITableViewController, AddFoodDelegate {
                     
                     let id = foodObject?["id"]
                     let name = foodObject?["name"]
+                    let foodImageURL = foodObject?["foodImageURL"]
                     let category = foodObject?["category"]
                     let desc = foodObject?["desc"]
                     let price = foodObject?["price"]
@@ -52,7 +53,7 @@ class FoodListTableViewController: UITableViewController, AddFoodDelegate {
                     let pickUpLatitude = foodObject?["pickUpLatitude"]
                     let pickUpLongitude = foodObject?["pickUpLongitude"]
                     
-                    let foodItem = FoodModel(id: id as! String?, name: name as! String?, category: category as! String?, desc: desc as! String?, price: price as! Double?, chef: chef as! String?, phoneNumber: phoneNumber as! String?, pickUpLocation: pickUpLocation as! String?, pickUpLatitude: pickUpLatitude as! Double?, pickUpLongitude: pickUpLongitude as! Double?)
+                    let foodItem = FoodModel(id: id as! String?, name: name as! String?, foodImageURL: foodImageURL as! String?, category: category as! String?, desc: desc as! String?, price: price as! Double?, chef: chef as! String?, phoneNumber: phoneNumber as! String?, pickUpLocation: pickUpLocation as! String?, pickUpLatitude: pickUpLatitude as! Double?, pickUpLongitude: pickUpLongitude as! Double?)
                     
                     self.foodsList.append(foodItem)
                 }
@@ -63,6 +64,7 @@ class FoodListTableViewController: UITableViewController, AddFoodDelegate {
 // HANDLER ENDS
         
         //category stuff
+        
         if foodCategory.tag == 0 {
             foodCatName = "Appetizer"
         }
@@ -103,6 +105,11 @@ class FoodListTableViewController: UITableViewController, AddFoodDelegate {
         cell.descLabel.text = foodItem.desc
         cell.chefLabel.text = foodItem.chef
         cell.priceLabel.text = "$"+String(describing: foodItem.price!)
+        
+        if let profileImageUrl = foodItem.foodImageURL {
+            cell.imageLabel.loadImageUsingCacheWithUrlString(profileImageUrl)
+        }
+        
         return cell
     }
     
@@ -113,13 +120,50 @@ class FoodListTableViewController: UITableViewController, AddFoodDelegate {
     }
 
 
+    var imageURL: String?
+    
     func addFood(by controller: UIViewController, newFood: [String : Any]) {
         navigationController?.popViewController(animated: true)
         
-        let key = refFoods.child("foods").childByAutoId().key
-        var newItem = newFood
-        newItem["id"] = key
-        refFoods.child("foods").child(key).setValue(newItem)
+        print(newFood["foodImageURL"])
+
+        let imageName = NSUUID().uuidString
+        let storageRef = Storage.storage().reference().child("food_images").child("\(imageName).png")
+        
+        let foodUpload = newFood["foodImageURL"]! as! UIImage
+        
+        if let uploadData = UIImagePNGRepresentation(foodUpload) {
+            
+            
+            storageRef.putData(uploadData, metadata: nil, completion: { (metadata, error) in
+                print("metaprint",metadata!)
+                if let error = error {
+                    print(error)
+                    return
+                }
+                
+                if let profileImageUrl = metadata?.downloadURL()?.absoluteString {
+                    print(profileImageUrl)
+                    print(type(of: profileImageUrl))
+                    self.imageURL = profileImageUrl
+                    let key = self.refFoods.child("foods").childByAutoId().key
+                    var newItem = newFood
+                    newItem["id"] = key
+                    newItem["foodImageURL"] = profileImageUrl
+                    print("this is the good thinking", self.imageURL!)
+                    
+                    self.refFoods.child("foods").child(key).setValue(newItem)
+                    
+                }
+                
+            })
+        }
+        
+        
+        
+        
+        
+
     }
     
     func buildFoodCatList() {
