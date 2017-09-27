@@ -10,13 +10,19 @@ import UIKit
 
 class FoodListTableViewCell: UITableViewCell {
 
+    weak var delegate: deleteFoodDelegate?
     
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var descLabel: UILabel!
     @IBOutlet weak var chefLabel: UILabel!
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var imageLabel: UIImageView!
+    @IBOutlet weak var distanceLabel: UILabel!
     
+    @IBOutlet weak var deleteFoodButton: UIButton!
+    @IBAction func deleteFoodButtonPressed(_ sender: UIButton) {
+        delegate?.deleteFood (by: self)
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()

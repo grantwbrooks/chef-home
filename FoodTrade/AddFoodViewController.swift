@@ -7,12 +7,18 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseAuth
 
 
-class AddFoodViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+
+class AddFoodViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, MapViewDelegate {
 
     weak var delegate: AddFoodDelegate?
     var catName = String()
+    var latitude = Double()
+    var longitude = Double()
+    var chefIdent: String = (Auth.auth().currentUser?.uid)!
     
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var categoryTextField: UITextField!
@@ -35,13 +41,19 @@ class AddFoodViewController: UIViewController, UIImagePickerControllerDelegate, 
                     "desc": descriptionTextField.text! as String,
                     "price": Double(priceTextField.text!)! as Double,
                     "chef": chefTextField.text! as String,
+                    "chefID": chefIdent as String,
                     "phoneNumber": phoneTextField.text! as String,
                     "pickUpLocation": pickUpLocationTextField.text! as String,
-                    "pickUpLatitude": 0.0 as Double,
-                    "pickUpLongitude": 0.0 as Double
+                    "pickUpLatitude": latitude as Double,
+                    "pickUpLongitude": longitude as Double
             ] as [String : Any]
         delegate?.addFood(by: self, newFood: food)
+        print("Chef ID", chefIdent)
     }
+    
+    
+    
+
     
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
@@ -76,11 +88,28 @@ class AddFoodViewController: UIViewController, UIImagePickerControllerDelegate, 
         present(imagePickerController, animated: true, completion: nil)
     }
     
+    @IBAction func locationTextPressed(_ sender: UITextField) {
+        print("tap tap tap 2")
+        performSegue(withIdentifier: "toMapSegue", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let navvc = segue.destination as! UINavigationController
+        let mapvc = navvc.topViewController as! MapViewController
+        mapvc.delegate = self
+    }
+
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         categoryTextField.text = catName
         foodImage.image = #imageLiteral(resourceName: "salad")
+  
+
+        
+            
+            //doSomething()
 
         // Do any additional setup after loading the view.
     }
@@ -90,15 +119,16 @@ class AddFoodViewController: UIViewController, UIImagePickerControllerDelegate, 
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func addCoordinates(by controller: UIViewController, latitude: Double, longitude: Double, locationName: String) {
+        print("delegate lat long", latitude, longitude, locationName)
+        dismiss(animated: true, completion: nil)
+        pickUpLocationTextField.text = locationName
+        self.latitude = latitude
+        self.longitude = longitude
+        
     }
-    */
+
+    
+    
 
 }

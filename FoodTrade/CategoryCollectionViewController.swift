@@ -7,13 +7,24 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 private let reuseIdentifier = "Cell"
 
 class CategoryCollectionViewController: UICollectionViewController {
     
+
+    @IBAction func logoutButtonPressed(_ sender: UIBarButtonItem) {
+        try! Auth.auth().signOut()
+        performSegue(withIdentifier: "logoutSegue", sender: self)
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        print(Auth.auth().currentUser?.email)
+        print(Auth.auth().currentUser?.displayName)
     }
     
     @IBAction func appetizerPressed(_ sender: UIButton) {
@@ -34,9 +45,14 @@ class CategoryCollectionViewController: UICollectionViewController {
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let fltc = segue.destination as! FoodListTableViewController
-        let cat = sender as! UIButton
-        fltc.foodCategory = cat
+        if segue.identifier == "logoutSegue" {
+            //logged out
+        }
+        else {
+            let fltc = segue.destination as! FoodListTableViewController
+            let cat = sender as! UIButton
+            fltc.foodCategory = cat
+        }
     }
     
     

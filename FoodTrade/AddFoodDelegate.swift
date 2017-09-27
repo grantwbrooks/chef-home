@@ -11,3 +11,11 @@ import UIKit
 protocol AddFoodDelegate: class {
     func addFood (by controller: UIViewController, newFood: [String : Any])
 }
+
+protocol MapViewDelegate: class {
+    func addCoordinates (by controller: UIViewController, latitude: Double, longitude: Double, locationName: String)
+}
+
+protocol deleteFoodDelegate: class {
+    func deleteFood (by: UITableViewCell)
+}

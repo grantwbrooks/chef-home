@@ -9,12 +9,20 @@
 import UIKit
 import Firebase
 import FirebaseDatabase
+import CoreLocation
 
-class FoodListTableViewController: UITableViewController, AddFoodDelegate {
+class FoodListTableViewController: UITableViewController, AddFoodDelegate, CLLocationManagerDelegate, deleteFoodDelegate {
     
     // Firebase
     var refFoods: DatabaseReference!
     var handle: DatabaseHandle?
+    
+    // Location stuff
+    var manager = CLLocationManager()
+    var location = CLLocation()
+    var ourLocation = CLLocation()
+    
+    
     
     var foodsList = [FoodModel]()
     var foodCategory = UIButton()
@@ -25,6 +33,11 @@ class FoodListTableViewController: UITableViewController, AddFoodDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //location stuff
+        manager.delegate = self
+        manager.desiredAccuracy = kCLLocationAccuracyBest
+        manager.requestWhenInUseAuthorization()
+        manager.startUpdatingLocation()
         
 
         
@@ -48,12 +61,13 @@ class FoodListTableViewController: UITableViewController, AddFoodDelegate {
                     let desc = foodObject?["desc"]
                     let price = foodObject?["price"]
                     let chef = foodObject?["chef"]
+                    let chefID = foodObject?["chefID"]
                     let phoneNumber = foodObject?["phoneNumber"]
                     let pickUpLocation = foodObject?["pickUpLocation"]
                     let pickUpLatitude = foodObject?["pickUpLatitude"]
                     let pickUpLongitude = foodObject?["pickUpLongitude"]
                     
-                    let foodItem = FoodModel(id: id as! String?, name: name as! String?, foodImageURL: foodImageURL as! String?, category: category as! String?, desc: desc as! String?, price: price as! Double?, chef: chef as! String?, phoneNumber: phoneNumber as! String?, pickUpLocation: pickUpLocation as! String?, pickUpLatitude: pickUpLatitude as! Double?, pickUpLongitude: pickUpLongitude as! Double?)
+                    let foodItem = FoodModel(id: id as! String?, name: name as! String?, foodImageURL: foodImageURL as! String?, category: category as! String?, desc: desc as! String?, price: price as! Double?, chef: chef as! String?, chefID: chefID as! String?, phoneNumber: phoneNumber as! String?, pickUpLocation: pickUpLocation as! String?, pickUpLatitude: pickUpLatitude as! Double?, pickUpLongitude: pickUpLongitude as! Double?)
                     
                     self.foodsList.append(foodItem)
                 }
@@ -78,11 +92,15 @@ class FoodListTableViewController: UITableViewController, AddFoodDelegate {
             foodCatName = "Desserts"
         }
         self.title = foodCatName
+        
+        
+        tableView.reloadData()
+        
     }
     
     
     override func viewWillAppear(_ animated: Bool) {
- 
+        print("locatoin---->",ourLocation)
     }
     
     override func didReceiveMemoryWarning() {
@@ -96,11 +114,13 @@ class FoodListTableViewController: UITableViewController, AddFoodDelegate {
     
     //Build each cell
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "foodCell", for: indexPath) as! FoodListTableViewCell
         
         let foodItem: FoodModel
 
         foodItem = foodsCategoryList[indexPath.row]
+        cell.delegate = self
         cell.nameLabel.text = foodItem.name
         cell.descLabel.text = foodItem.desc
         cell.chefLabel.text = foodItem.chef
@@ -108,6 +128,28 @@ class FoodListTableViewController: UITableViewController, AddFoodDelegate {
         
         if let profileImageUrl = foodItem.foodImageURL {
             cell.imageLabel.loadImageUsingCacheWithUrlString(profileImageUrl)
+        }
+        
+        //locaton stuff for cells
+        let coordinate₀ = CLLocation(latitude: foodItem.pickUpLatitude!, longitude: foodItem.pickUpLongitude!)
+        let coordinate₁ = ourLocation
+        
+        let distanceInMeters = coordinate₀.distance(from: coordinate₁) // result is in meters
+        let distanceInMiles = Int(distanceInMeters / 1609)
+        let distanceString = String(distanceInMiles)
+        print("distance:  \(distanceInMiles)")
+        //        print("distance\(ourLocation)")
+        print("coordinates:",coordinate₀,coordinate₁)
+        
+        
+        cell.distanceLabel.text = "\(distanceString) miles"
+        
+        //Add Delete button
+        print("chefid --->>>>>",foodItem.chefID,Auth.auth().currentUser?.uid)
+        if foodItem.chefID != Auth.auth().currentUser?.uid {
+            cell.deleteFoodButton.isHidden = true
+        } else {
+            cell.deleteFoodButton.isHidden = false
         }
         
         return cell
@@ -165,7 +207,7 @@ class FoodListTableViewController: UITableViewController, AddFoodDelegate {
         
 
     }
-    
+    // We build the food cat list HERE
     func buildFoodCatList() {
         for item in foodsList{
             if item.category == foodCatName {
@@ -173,5 +215,22 @@ class FoodListTableViewController: UITableViewController, AddFoodDelegate {
             }
         }
         tableView.reloadData()
+    }
+    
+    // Gets our locatoin from Core Location Manager
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
+        ourLocation = CLLocation(latitude: locations[0].coordinate.latitude, longitude: locations[0].coordinate.longitude)
+        print("inside function location", ourLocation)
+        
+    }
+    
+    func deleteFood(by: UITableViewCell) {
+        if let indexPath = tableView.indexPath(for: by) {
+            print("delete food button pressed this is the index path",indexPath.row)
+            let deletedItem = foodsCategoryList[indexPath.row].id
+            
+            self.refFoods.child("foods").child(deletedItem!).removeValue()
+        }
     }
 }
