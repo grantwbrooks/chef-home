@@ -19,3 +19,9 @@ protocol MapViewDelegate: class {
 protocol deleteFoodDelegate: class {
     func deleteFood (by: UITableViewCell)
 }
+
+protocol messageChefDelegate: class {
+    func messageChef (by: UITableViewCell)
+}
+
+

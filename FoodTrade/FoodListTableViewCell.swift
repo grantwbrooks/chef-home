@@ -11,6 +11,7 @@ import UIKit
 class FoodListTableViewCell: UITableViewCell {
 
     weak var delegate: deleteFoodDelegate?
+    weak var messageDelegate: messageChefDelegate?
     
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var descLabel: UILabel!
@@ -18,6 +19,14 @@ class FoodListTableViewCell: UITableViewCell {
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var imageLabel: UIImageView!
     @IBOutlet weak var distanceLabel: UILabel!
+    
+    
+    
+    @IBAction func orderFoodPressed(_ sender: UIButton) {
+        messageDelegate?.messageChef(by: self)
+    }
+    
+
     
     @IBOutlet weak var deleteFoodButton: UIButton!
     @IBAction func deleteFoodButtonPressed(_ sender: UIButton) {
@@ -34,5 +43,6 @@ class FoodListTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
 
 }

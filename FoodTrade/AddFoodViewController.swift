@@ -39,7 +39,7 @@ class AddFoodViewController: UIViewController, UIImagePickerControllerDelegate, 
                     "foodImageURL": foodImage.image!,
                     "category": categoryTextField.text! as String,
                     "desc": descriptionTextField.text! as String,
-                    "price": Double(priceTextField.text!)! as Double,
+                    "price": priceTextField.text! as String,
                     "chef": chefTextField.text! as String,
                     "chefID": chefIdent as String,
                     "phoneNumber": phoneTextField.text! as String,
@@ -105,13 +105,20 @@ class AddFoodViewController: UIViewController, UIImagePickerControllerDelegate, 
         super.viewDidLoad()
         categoryTextField.text = catName
         foodImage.image = #imageLiteral(resourceName: "salad")
-  
-
         
-            
-            //doSomething()
+        //money stuff
+        priceTextField.addTarget(self, action: #selector(myTextFieldDidChange), for: .editingChanged)
 
-        // Do any additional setup after loading the view.
+  
+        
+        
+        //Looks for single or multiple taps.
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        
+        //Uncomment the line below if you want the tap not not interfere and cancel other interactions.
+        //tap.cancelsTouchesInView = false
+        
+        view.addGestureRecognizer(tap)
     }
 
     override func didReceiveMemoryWarning() {
@@ -128,7 +135,47 @@ class AddFoodViewController: UIViewController, UIImagePickerControllerDelegate, 
         
     }
 
+    //Calls this function when the tap is recognized.
+    func dismissKeyboard() {
+        //Causes the view (or one of its embedded text fields) to resign the first responder status.
+        view.endEditing(true)
+    }
     
-    
+    ///// money stuff
+    func myTextFieldDidChange(_ textField: UITextField) {
+        
+        if let amountString = textField.text?.currencyInputFormatting() {
+            textField.text = amountString
+        }
+    }
+}
 
+extension String {
+    
+    // formatting text for currency textField
+    func currencyInputFormatting() -> String {
+        
+        var number: NSNumber!
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currencyAccounting
+        formatter.currencySymbol = "$"
+        formatter.maximumFractionDigits = 2
+        formatter.minimumFractionDigits = 2
+        
+        var amountWithPrefix = self
+        
+        // remove from String: "$", ".", ","
+        let regex = try! NSRegularExpression(pattern: "[^0-9]", options: .caseInsensitive)
+        amountWithPrefix = regex.stringByReplacingMatches(in: amountWithPrefix, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: NSMakeRange(0, self.characters.count), withTemplate: "")
+        
+        let double = (amountWithPrefix as NSString).doubleValue
+        number = NSNumber(value: (double / 100))
+        
+        // if first number is 0 or all numbers were deleted
+        guard number != 0 as NSNumber else {
+            return ""
+        }
+        
+        return formatter.string(from: number)!
+    }
 }

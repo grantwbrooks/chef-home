@@ -10,8 +10,10 @@ import UIKit
 import Firebase
 import FirebaseDatabase
 import CoreLocation
+import FirebaseAuth
+import MessageUI
 
-class FoodListTableViewController: UITableViewController, AddFoodDelegate, CLLocationManagerDelegate, deleteFoodDelegate {
+class FoodListTableViewController: UITableViewController, AddFoodDelegate, CLLocationManagerDelegate, deleteFoodDelegate, MFMessageComposeViewControllerDelegate, messageChefDelegate {
     
     // Firebase
     var refFoods: DatabaseReference!
@@ -28,6 +30,10 @@ class FoodListTableViewController: UITableViewController, AddFoodDelegate, CLLoc
     var foodCategory = UIButton()
     var foodCatName = String()
     var foodsCategoryList = [FoodModel]()
+    
+    //Messaging stuff
+    var recipient1: [String] = []
+
 
 
     
@@ -67,7 +73,7 @@ class FoodListTableViewController: UITableViewController, AddFoodDelegate, CLLoc
                     let pickUpLatitude = foodObject?["pickUpLatitude"]
                     let pickUpLongitude = foodObject?["pickUpLongitude"]
                     
-                    let foodItem = FoodModel(id: id as! String?, name: name as! String?, foodImageURL: foodImageURL as! String?, category: category as! String?, desc: desc as! String?, price: price as! Double?, chef: chef as! String?, chefID: chefID as! String?, phoneNumber: phoneNumber as! String?, pickUpLocation: pickUpLocation as! String?, pickUpLatitude: pickUpLatitude as! Double?, pickUpLongitude: pickUpLongitude as! Double?)
+                    let foodItem = FoodModel(id: id as! String?, name: name as! String?, foodImageURL: foodImageURL as! String?, category: category as! String?, desc: desc as! String?, price: price as! String?, chef: chef as! String?, chefID: chefID as! String?, phoneNumber: phoneNumber as! String?, pickUpLocation: pickUpLocation as! String?, pickUpLatitude: pickUpLatitude as! Double?, pickUpLongitude: pickUpLongitude as! Double?)
                     
                     self.foodsList.append(foodItem)
                 }
@@ -121,10 +127,11 @@ class FoodListTableViewController: UITableViewController, AddFoodDelegate, CLLoc
 
         foodItem = foodsCategoryList[indexPath.row]
         cell.delegate = self
+        cell.messageDelegate = self
         cell.nameLabel.text = foodItem.name
         cell.descLabel.text = foodItem.desc
         cell.chefLabel.text = foodItem.chef
-        cell.priceLabel.text = "$"+String(describing: foodItem.price!)
+        cell.priceLabel.text = foodItem.price
         
         if let profileImageUrl = foodItem.foodImageURL {
             cell.imageLabel.loadImageUsingCacheWithUrlString(profileImageUrl)
@@ -201,10 +208,6 @@ class FoodListTableViewController: UITableViewController, AddFoodDelegate, CLLoc
             })
         }
         
-        
-        
-        
-        
 
     }
     // We build the food cat list HERE
@@ -233,4 +236,32 @@ class FoodListTableViewController: UITableViewController, AddFoodDelegate, CLLoc
             self.refFoods.child("foods").child(deletedItem!).removeValue()
         }
     }
+    
+    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func messageChef(by: UITableViewCell) {
+        if let indexPath = tableView.indexPath(for: by) {
+            let messageThisChef = foodsCategoryList[indexPath.row].phoneNumber
+            
+            if MFMessageComposeViewController.canSendText() {
+                let composeVC = MFMessageComposeViewController()
+                composeVC.messageComposeDelegate = self
+                
+                // Configure the fields of the interface.
+                composeVC.recipients = [messageThisChef!]
+                composeVC.body = "Hello from California! Buy my delicios food!"
+                
+                // Present the view controller modally.
+                self.present(composeVC, animated: true, completion: nil)
+                
+            } else {
+                print("Cannot send text")
+            }
+        }
+    }
+    
+
+    
 }
