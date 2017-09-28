@@ -51,10 +51,7 @@ class AddFoodViewController: UIViewController, UIImagePickerControllerDelegate, 
         print("Chef ID", chefIdent)
     }
     
-    
-    
 
-    
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         // The info dictionary may contain multiple representations of the image. You want to use the original.
@@ -109,9 +106,7 @@ class AddFoodViewController: UIViewController, UIImagePickerControllerDelegate, 
         //money stuff
         priceTextField.addTarget(self, action: #selector(myTextFieldDidChange), for: .editingChanged)
 
-  
-        
-        
+
         //Looks for single or multiple taps.
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         

@@ -77,26 +77,6 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKLocalSearchCom
                 let region = MKCoordinateRegionMake(coordinate, span)
                 self.myMapView.setRegion(region, animated: true)
                 
-                //Show confirm alert
-//                let alert = UIAlertController(title: "Confirm Address",
-//                                              message: response!.mapItems[0].name,
-//                                              preferredStyle: .alert)
-//                
-////                alert.addTextField(configurationHandler: nil)
-//                
-//                let saveAction = UIAlertAction(title: "Confirm", style: .default)
-//                {
-//                    _ in
-////                    let textField = alert.textFields![0]
-////                    let newCategoryEntry = Category(context: self.managedObjectContext)
-////                    newCategoryEntry.name = textField.text!
-////                    self.saveCategoryEntries()
-//                }
-//                
-//                let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-//                alert.addAction(saveAction)
-//                alert.addAction(cancelAction)
-//                self.present(alert, animated: true, completion: nil)
                 
                 let actionSheetControllerIOS8: UIAlertController = UIAlertController(title: "Confirm Address", message: response!.mapItems[0].name, preferredStyle: .actionSheet)
                 
@@ -117,10 +97,8 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKLocalSearchCom
                 actionSheetControllerIOS8.addAction(saveActionButton)
                 
                 self.present(actionSheetControllerIOS8, animated: true, completion: nil)
-                
             }
         }
-        
     }
     
     
@@ -134,16 +112,6 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKLocalSearchCom
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

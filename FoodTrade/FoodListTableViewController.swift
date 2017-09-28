@@ -15,6 +15,15 @@ import MessageUI
 
 class FoodListTableViewController: UITableViewController, AddFoodDelegate, CLLocationManagerDelegate, deleteFoodDelegate, MFMessageComposeViewControllerDelegate, messageChefDelegate {
     
+    // Gets our locatoin from Core Location Manager
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
+        ourLocation = CLLocation(latitude: locations[0].coordinate.latitude, longitude: locations[0].coordinate.longitude)
+/////DO NOT FORGET TO DO THIS or table data won't show accurate location data, very important!!!/////
+        tableView.reloadData()
+        print("inside function location", ourLocation)
+    }
+    
     // Firebase
     var refFoods: DatabaseReference!
     var handle: DatabaseHandle?
@@ -39,16 +48,15 @@ class FoodListTableViewController: UITableViewController, AddFoodDelegate, CLLoc
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
         //location stuff
         manager.delegate = self
         manager.desiredAccuracy = kCLLocationAccuracyBest
         manager.requestWhenInUseAuthorization()
         manager.startUpdatingLocation()
         
-
-        
         refFoods = Database.database().reference()
-        
+        print("locatoin dddiddd loadddddddd---->",ourLocation)
 //                refFoods.observe(DataEventType.value, with:{(snapshot) in
         handle = refFoods.child("foods").observe(DataEventType.value, with:{(snapshot) in
             if snapshot.childrenCount > 0{
@@ -106,7 +114,7 @@ class FoodListTableViewController: UITableViewController, AddFoodDelegate, CLLoc
     
     
     override func viewWillAppear(_ animated: Bool) {
-        print("locatoin---->",ourLocation)
+        print("locatoin wil apppppppppppppeparaerearer---->",ourLocation)
     }
     
     override func didReceiveMemoryWarning() {
@@ -140,10 +148,14 @@ class FoodListTableViewController: UITableViewController, AddFoodDelegate, CLLoc
         //locaton stuff for cells
         let coordinate₀ = CLLocation(latitude: foodItem.pickUpLatitude!, longitude: foodItem.pickUpLongitude!)
         let coordinate₁ = ourLocation
+        print("coordinate 1----------->", coordinate₁)
         
         let distanceInMeters = coordinate₀.distance(from: coordinate₁) // result is in meters
-        let distanceInMiles = Int(distanceInMeters / 1609)
-        let distanceString = String(distanceInMiles)
+        let distanceInMiles = Double(distanceInMeters / 1609)
+        
+        let y = Double(round(100*distanceInMiles)/100)
+        
+        let distanceString = String(y)
         print("distance:  \(distanceInMiles)")
         //        print("distance\(ourLocation)")
         print("coordinates:",coordinate₀,coordinate₁)
@@ -178,11 +190,8 @@ class FoodListTableViewController: UITableViewController, AddFoodDelegate, CLLoc
 
         let imageName = NSUUID().uuidString
         let storageRef = Storage.storage().reference().child("food_images").child("\(imageName).png")
-        
         let foodUpload = newFood["foodImageURL"]! as! UIImage
-        
         if let uploadData = UIImagePNGRepresentation(foodUpload) {
-            
             
             storageRef.putData(uploadData, metadata: nil, completion: { (metadata, error) in
                 print("metaprint",metadata!)
@@ -202,9 +211,7 @@ class FoodListTableViewController: UITableViewController, AddFoodDelegate, CLLoc
                     print("this is the good thinking", self.imageURL!)
                     
                     self.refFoods.child("foods").child(key).setValue(newItem)
-                    
                 }
-                
             })
         }
         
@@ -212,21 +219,36 @@ class FoodListTableViewController: UITableViewController, AddFoodDelegate, CLLoc
     }
     // We build the food cat list HERE
     func buildFoodCatList() {
-        for item in foodsList{
-            if item.category == foodCatName {
-                foodsCategoryList.append(item)
+        
+        let when = DispatchTime.now() + 0.1 // change 2 to desired number of seconds
+        DispatchQueue.main.asyncAfter(deadline: when) {
+//            // Your code with delay
+        
+            for item in self.foodsList{
+
+
+                //get distance for each item
+                let coordinate₀ = CLLocation(latitude: item.pickUpLatitude!, longitude: item.pickUpLongitude!)
+                let coordinate₁ = self.ourLocation
+                
+                let distanceInMeters = coordinate₀.distance(from: coordinate₁) // result is in meters
+                let distanceInMiles = Double(distanceInMeters / 1609)
+                
+                let distanceFromYou = Double(round(100*distanceInMiles)/100)
+                
+                print("these are chef id and auth id",item.chefID, Auth.auth().currentUser?.uid)
+                if item.category == self.foodCatName && distanceFromYou < 6 && item.chefID != Auth.auth().currentUser?.uid {
+                    self.foodsCategoryList.append(item)
+                }
+                else if item.category == self.foodCatName && item.chefID == Auth.auth().currentUser?.uid {
+                    self.foodsCategoryList.append(item)
+                }
+                print("length of food cat list------>",self.foodsCategoryList.count)
             }
         }
         tableView.reloadData()
     }
     
-    // Gets our locatoin from Core Location Manager
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
-        ourLocation = CLLocation(latitude: locations[0].coordinate.latitude, longitude: locations[0].coordinate.longitude)
-        print("inside function location", ourLocation)
-        
-    }
     
     func deleteFood(by: UITableViewCell) {
         if let indexPath = tableView.indexPath(for: by) {
@@ -240,25 +262,58 @@ class FoodListTableViewController: UITableViewController, AddFoodDelegate, CLLoc
     func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
         dismiss(animated: true, completion: nil)
     }
-    
+
+    var foodPic: UIImage = #imageLiteral(resourceName: "salad")
     func messageChef(by: UITableViewCell) {
         if let indexPath = tableView.indexPath(for: by) {
             let messageThisChef = foodsCategoryList[indexPath.row].phoneNumber
+            let messageChefName = foodsCategoryList[indexPath.row].chef!
+            let messageFoodName = foodsCategoryList[indexPath.row].name!
+            let messageFoodDesc = foodsCategoryList[indexPath.row].desc!
+            let messageFoodPrice = foodsCategoryList[indexPath.row].price!
+            let messageFoodPicURL = foodsCategoryList[indexPath.row].foodImageURL!
             
-            if MFMessageComposeViewController.canSendText() {
-                let composeVC = MFMessageComposeViewController()
-                composeVC.messageComposeDelegate = self
+            
+            //otherwise fire off a new download
+            let url = URL(string: messageFoodPicURL)
+            URLSession.shared.dataTask(with: url!, completionHandler: { (data, response, error) in
                 
-                // Configure the fields of the interface.
-                composeVC.recipients = [messageThisChef!]
-                composeVC.body = "Hello from California! Buy my delicios food!"
+                //download hit an error so lets return out
+                if let error = error {
+                    print(error)
+                    return
+                }
                 
-                // Present the view controller modally.
-                self.present(composeVC, animated: true, completion: nil)
+                DispatchQueue.main.async(execute: {
+                    if let downloadedImage = UIImage(data: data!) {
+                        self.foodPic = downloadedImage
+                        print("foodpic1",self.foodPic)
+                        print("foodpic download image1",downloadedImage)
+                    }
+                })
                 
-            } else {
-                print("Cannot send text")
-            }
+                if MFMessageComposeViewController.canSendText() {
+                    let composeVC = MFMessageComposeViewController()
+                    composeVC.messageComposeDelegate = self
+                    
+                    // Configure the fields of the interface.
+                    composeVC.recipients = [messageThisChef!]
+                    composeVC.body = "Hi Chef \(messageChefName)! I'm interested in purchasing your \(messageFoodName) for \(messageFoodPrice) each. Please reply YES to accept order and follow up with pick-up details."
+                    
+                    let data = UIImagePNGRepresentation(self.foodPic)
+
+                    composeVC.addAttachmentData(data!, typeIdentifier: "image/png", filename: "any.png")
+
+                    print("foodpic",self.foodPic)
+                    
+                    // Present the view controller modally.
+                    self.present(composeVC, animated: true, completion: nil)
+                    
+                } else {
+                    print("Cannot send text")
+                }
+
+            }).resume()
         }
     }
     

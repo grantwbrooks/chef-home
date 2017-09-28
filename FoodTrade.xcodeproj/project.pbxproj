@@ -8,21 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		026BB1951F71C003007DCFF2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026BB1941F71C003007DCFF2 /* AppDelegate.swift */; };
-		026BB19A1F71C003007DCFF2 /* Main_old.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 026BB1981F71C003007DCFF2 /* Main_old.storyboard */; };
-		026BB19D1F71C003007DCFF2 /* FoodTrade.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 026BB19B1F71C003007DCFF2 /* FoodTrade.xcdatamodeld */; };
 		026BB19F1F71C003007DCFF2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 026BB19E1F71C003007DCFF2 /* Assets.xcassets */; };
 		026BB1A21F71C003007DCFF2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 026BB1A01F71C003007DCFF2 /* LaunchScreen.storyboard */; };
 		026BB1AA1F71CA6A007DCFF2 /* CategoryCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026BB1A91F71CA6A007DCFF2 /* CategoryCollectionViewController.swift */; };
 		026BB1AC1F71CCE2007DCFF2 /* FoodListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026BB1AB1F71CCE2007DCFF2 /* FoodListTableViewController.swift */; };
-		026BB1AE1F71CCFB007DCFF2 /* FoodDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026BB1AD1F71CCFB007DCFF2 /* FoodDetailViewController.swift */; };
-		026BB1B01F71CD3A007DCFF2 /* CreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026BB1AF1F71CD3A007DCFF2 /* CreateViewController.swift */; };
 		C0929DA81F798E89003BF7AE /* AddFoodViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0929DA71F798E89003BF7AE /* AddFoodViewController.swift */; };
 		C0929DAA1F798EB5003BF7AE /* AddFoodDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0929DA91F798EB5003BF7AE /* AddFoodDelegate.swift */; };
 		C0929DAC1F7A0288003BF7AE /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0929DAB1F7A0288003BF7AE /* Extensions.swift */; };
 		C0929DAF1F7AC8D0003BF7AE /* LogInRegViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0929DAE1F7AC8D0003BF7AE /* LogInRegViewController.swift */; };
 		C0929DB11F7B0097003BF7AE /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0929DB01F7B0097003BF7AE /* MapViewController.swift */; };
 		C09927711F72109000AA88BB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C09927701F72109000AA88BB /* GoogleService-Info.plist */; };
-		C0EDFCC61F7C640700111AD7 /* MoveViewWhenKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EDFCC51F7C640700111AD7 /* MoveViewWhenKeyboard.swift */; };
 		C0F282621F7222D2006576A5 /* FoodModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F282611F7222D2006576A5 /* FoodModel.swift */; };
 		C0F282641F7247CF006576A5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C0F282631F7247CF006576A5 /* Main.storyboard */; };
 		C0F282661F7247EB006576A5 /* RatingControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F282651F7247EB006576A5 /* RatingControl.swift */; };
@@ -33,16 +28,11 @@
 /* Begin PBXFileReference section */
 		026BB1911F71C003007DCFF2 /* FoodTrade.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FoodTrade.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		026BB1941F71C003007DCFF2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		026BB1991F71C003007DCFF2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_old.storyboard; sourceTree = "<group>"; };
-		026BB19C1F71C003007DCFF2 /* FoodTrade.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FoodTrade.xcdatamodel; sourceTree = "<group>"; };
 		026BB19E1F71C003007DCFF2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		026BB1A11F71C003007DCFF2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		026BB1A31F71C003007DCFF2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		026BB1A91F71CA6A007DCFF2 /* CategoryCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryCollectionViewController.swift; sourceTree = "<group>"; };
 		026BB1AB1F71CCE2007DCFF2 /* FoodListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodListTableViewController.swift; sourceTree = "<group>"; };
-		026BB1AD1F71CCFB007DCFF2 /* FoodDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodDetailViewController.swift; sourceTree = "<group>"; };
-		026BB1AF1F71CD3A007DCFF2 /* CreateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateViewController.swift; sourceTree = "<group>"; };
-		02D93A541F71FED90054BECB /* FoodTrade 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "FoodTrade 2.xcdatamodel"; sourceTree = "<group>"; };
 		3B3D74CFC8CB8DC668AF79FD /* Pods-FoodTrade.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FoodTrade.release.xcconfig"; path = "Pods/Target Support Files/Pods-FoodTrade/Pods-FoodTrade.release.xcconfig"; sourceTree = "<group>"; };
 		46A5CF390452373AAC8B4A2F /* Pods_FoodTrade.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FoodTrade.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A04966C35E151D20D6B9525B /* Pods-FoodTrade.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FoodTrade.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FoodTrade/Pods-FoodTrade.debug.xcconfig"; sourceTree = "<group>"; };
@@ -52,7 +42,6 @@
 		C0929DAE1F7AC8D0003BF7AE /* LogInRegViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInRegViewController.swift; sourceTree = "<group>"; };
 		C0929DB01F7B0097003BF7AE /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		C09927701F72109000AA88BB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		C0EDFCC51F7C640700111AD7 /* MoveViewWhenKeyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoveViewWhenKeyboard.swift; sourceTree = "<group>"; };
 		C0F282611F7222D2006576A5 /* FoodModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodModel.swift; sourceTree = "<group>"; };
 		C0F282631F7247CF006576A5 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		C0F282651F7247EB006576A5 /* RatingControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingControl.swift; sourceTree = "<group>"; };
@@ -92,26 +81,21 @@
 		026BB1931F71C003007DCFF2 /* FoodTrade */ = {
 			isa = PBXGroup;
 			children = (
-				C09927701F72109000AA88BB /* GoogleService-Info.plist */,
 				026BB1941F71C003007DCFF2 /* AppDelegate.swift */,
 				C0F282631F7247CF006576A5 /* Main.storyboard */,
-				C0929DB01F7B0097003BF7AE /* MapViewController.swift */,
 				C0929DAE1F7AC8D0003BF7AE /* LogInRegViewController.swift */,
-				C0929DAD1F7AC86D003BF7AE /* Helper */,
-				026BB1981F71C003007DCFF2 /* Main_old.storyboard */,
 				026BB1A91F71CA6A007DCFF2 /* CategoryCollectionViewController.swift */,
 				026BB1AB1F71CCE2007DCFF2 /* FoodListTableViewController.swift */,
+				C0F282671F7255CD006576A5 /* FoodListTableViewCell.swift */,
 				C0929DA71F798E89003BF7AE /* AddFoodViewController.swift */,
 				C0929DA91F798EB5003BF7AE /* AddFoodDelegate.swift */,
-				C0F282651F7247EB006576A5 /* RatingControl.swift */,
+				C0929DB01F7B0097003BF7AE /* MapViewController.swift */,
+				C0F282611F7222D2006576A5 /* FoodModel.swift */,
+				C0929DAD1F7AC86D003BF7AE /* Helper */,
 				026BB19E1F71C003007DCFF2 /* Assets.xcassets */,
 				026BB1A01F71C003007DCFF2 /* LaunchScreen.storyboard */,
+				C09927701F72109000AA88BB /* GoogleService-Info.plist */,
 				026BB1A31F71C003007DCFF2 /* Info.plist */,
-				026BB19B1F71C003007DCFF2 /* FoodTrade.xcdatamodeld */,
-				C0F282611F7222D2006576A5 /* FoodModel.swift */,
-				C0F282671F7255CD006576A5 /* FoodListTableViewCell.swift */,
-				026BB1AD1F71CCFB007DCFF2 /* FoodDetailViewController.swift */,
-				026BB1AF1F71CD3A007DCFF2 /* CreateViewController.swift */,
 			);
 			path = FoodTrade;
 			sourceTree = "<group>";
@@ -127,8 +111,8 @@
 		C0929DAD1F7AC86D003BF7AE /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				C0F282651F7247EB006576A5 /* RatingControl.swift */,
 				C0929DAB1F7A0288003BF7AE /* Extensions.swift */,
-				C0EDFCC51F7C640700111AD7 /* MoveViewWhenKeyboard.swift */,
 			);
 			name = Helper;
 			sourceTree = "<group>";
@@ -209,7 +193,6 @@
 				C0F282641F7247CF006576A5 /* Main.storyboard in Resources */,
 				C09927711F72109000AA88BB /* GoogleService-Info.plist in Resources */,
 				026BB19F1F71C003007DCFF2 /* Assets.xcassets in Resources */,
-				026BB19A1F71C003007DCFF2 /* Main_old.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,6 +241,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-FoodTrade/Pods-FoodTrade-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
@@ -265,6 +249,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
@@ -284,31 +269,19 @@
 				026BB1951F71C003007DCFF2 /* AppDelegate.swift in Sources */,
 				026BB1AA1F71CA6A007DCFF2 /* CategoryCollectionViewController.swift in Sources */,
 				C0929DAF1F7AC8D0003BF7AE /* LogInRegViewController.swift in Sources */,
-				026BB1B01F71CD3A007DCFF2 /* CreateViewController.swift in Sources */,
 				026BB1AC1F71CCE2007DCFF2 /* FoodListTableViewController.swift in Sources */,
 				C0F282661F7247EB006576A5 /* RatingControl.swift in Sources */,
-				026BB1AE1F71CCFB007DCFF2 /* FoodDetailViewController.swift in Sources */,
 				C0929DAC1F7A0288003BF7AE /* Extensions.swift in Sources */,
 				C0F282681F7255CD006576A5 /* FoodListTableViewCell.swift in Sources */,
-				026BB19D1F71C003007DCFF2 /* FoodTrade.xcdatamodeld in Sources */,
 				C0929DAA1F798EB5003BF7AE /* AddFoodDelegate.swift in Sources */,
 				C0F282621F7222D2006576A5 /* FoodModel.swift in Sources */,
 				C0929DB11F7B0097003BF7AE /* MapViewController.swift in Sources */,
-				C0EDFCC61F7C640700111AD7 /* MoveViewWhenKeyboard.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		026BB1981F71C003007DCFF2 /* Main_old.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				026BB1991F71C003007DCFF2 /* Base */,
-			);
-			name = Main_old.storyboard;
-			sourceTree = "<group>";
-		};
 		026BB1A01F71C003007DCFF2 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -463,20 +436,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		026BB19B1F71C003007DCFF2 /* FoodTrade.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				02D93A541F71FED90054BECB /* FoodTrade 2.xcdatamodel */,
-				026BB19C1F71C003007DCFF2 /* FoodTrade.xcdatamodel */,
-			);
-			currentVersion = 02D93A541F71FED90054BECB /* FoodTrade 2.xcdatamodel */;
-			path = FoodTrade.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 026BB1891F71C003007DCFF2 /* Project object */;
 }
