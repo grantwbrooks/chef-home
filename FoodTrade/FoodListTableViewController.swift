@@ -178,49 +178,83 @@ class FoodListTableViewController: UITableViewController, AddFoodDelegate, CLLoc
         let cvc = segue.destination as! AddFoodViewController
         cvc.catName = foodCatName
         cvc.delegate = self
+        
+        if segue.identifier == "editFoodSegue"{
+            cvc.callingSegue = segue.identifier
+            let index = sender as! IndexPath
+            cvc.index = index
+            cvc.editFoodItem = foodsCategoryList[index.row]
+        }
     }
 
 
     var imageURL: String?
     
-    func addFood(by controller: UIViewController, newFood: [String : Any]) {
+    func addFood(by controller: UIViewController, newFood: [String : Any], indexPath: IndexPath?) {
         navigationController?.popViewController(animated: true)
         
-        print(newFood["foodImageURL"])
-
-        let imageName = NSUUID().uuidString
-        let storageRef = Storage.storage().reference().child("food_images").child("\(imageName).png")
-        let foodUpload = newFood["foodImageURL"]! as! UIImage
-        if let uploadData = UIImagePNGRepresentation(foodUpload) {
-            
-            storageRef.putData(uploadData, metadata: nil, completion: { (metadata, error) in
-                print("metaprint",metadata!)
-                if let error = error {
-                    print(error)
-                    return
-                }
-                
-                if let profileImageUrl = metadata?.downloadURL()?.absoluteString {
-                    print(profileImageUrl)
-                    print(type(of: profileImageUrl))
-                    self.imageURL = profileImageUrl
-                    let key = self.refFoods.child("foods").childByAutoId().key
-                    var newItem = newFood
-                    newItem["id"] = key
-                    newItem["foodImageURL"] = profileImageUrl
-                    print("this is the good thinking", self.imageURL!)
+        //UPDATE food item
+        if let ip = indexPath{
+            //getting UIImage from add food page ready to upload
+            let imageName = NSUUID().uuidString
+            let storageRef = Storage.storage().reference().child("food_images").child("\(imageName).png")
+            let foodUpload = newFood["foodImageURL"]! as! UIImage
+            if let uploadData = UIImagePNGRepresentation(foodUpload) {
+                //uploading data representation of Image
+                storageRef.putData(uploadData, metadata: nil, completion: { (metadata, error) in
+                    print("metaprint",metadata!)
+                    if let error = error {
+                        print(error)
+                        return
+                    }
                     
-                    self.refFoods.child("foods").child(key).setValue(newItem)
-                }
-            })
-        }
-        
+                    if let profileImageUrl = metadata?.downloadURL()?.absoluteString {
+                        self.imageURL = profileImageUrl
+                        
+                        //saving to Firebase Starts here
+                        var newItem = newFood
 
+                        newItem["foodImageURL"] = profileImageUrl
+                        
+                        self.refFoods.child("foods").child(newFood["id"] as! String).updateChildValues(newItem)
+                    }
+                })
+            }
+        }
+        //ADD new food item
+        else {
+            //getting UIImage from add food page ready to upload
+            let imageName = NSUUID().uuidString
+            let storageRef = Storage.storage().reference().child("food_images").child("\(imageName).png")
+            let foodUpload = newFood["foodImageURL"]! as! UIImage
+            if let uploadData = UIImagePNGRepresentation(foodUpload) {
+                //uploading data representation of Image
+                storageRef.putData(uploadData, metadata: nil, completion: { (metadata, error) in
+                    print("metaprint",metadata!)
+                    if let error = error {
+                        print(error)
+                        return
+                    }
+                    
+                    if let profileImageUrl = metadata?.downloadURL()?.absoluteString {
+                        self.imageURL = profileImageUrl
+                        
+                        //saving to Firebase Starts here
+                        let key = self.refFoods.child("foods").childByAutoId().key
+                        var newItem = newFood
+                        newItem["id"] = key
+                        newItem["foodImageURL"] = profileImageUrl
+                        
+                        self.refFoods.child("foods").child(key).setValue(newItem)
+                    }
+                })
+            }
+        }
     }
     // We build the food cat list HERE
     func buildFoodCatList() {
         
-        let when = DispatchTime.now() + 0.1 // change 2 to desired number of seconds
+        let when = DispatchTime.now() + 0.1 // change to desired number of seconds
         DispatchQueue.main.asyncAfter(deadline: when) {
 //            // Your code with delay
         
@@ -249,16 +283,71 @@ class FoodListTableViewController: UITableViewController, AddFoodDelegate, CLLoc
         tableView.reloadData()
     }
     
-    
+    // Delete Food stuff
     func deleteFood(by: UITableViewCell) {
         if let indexPath = tableView.indexPath(for: by) {
-            print("delete food button pressed this is the index path",indexPath.row)
-            let deletedItem = foodsCategoryList[indexPath.row].id
+        
+            let alert = UIAlertController(title: self.foodsCategoryList[indexPath.row].name,
+                                          message: "Are you sure you want to modify this food it looks delicious?",
+                                          preferredStyle: .alert)
             
-            self.refFoods.child("foods").child(deletedItem!).removeValue()
+            let editAction = UIAlertAction(title: "Edit", style: .default)
+            {
+                _ in
+                self.performSegue(withIdentifier: "editFoodSegue", sender: indexPath)
+
+            }
+            
+            let deleteAction = UIAlertAction(title: "Delete", style: .default)
+            {
+                _ in
+                print("delete food button pressed this is the index path",indexPath.row)
+                let deletedItem = self.foodsCategoryList[indexPath.row].id
+                
+                self.refFoods.child("foods").child(deletedItem!).removeValue()
+            }
+            
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            alert.addAction(editAction)
+            alert.addAction(deleteAction)
+            alert.addAction(cancelAction)
+            present(alert, animated: true, completion: nil)
         }
+        
+        
+//        if let indexPath = tableView.indexPath(for: by) {
+//            
+//            let alert = UIAlertController(title: "New Entry",
+//                                          message: "Add a new food category",
+//                                          preferredStyle: .actionSheet)
+//            
+//            alert.addTextField(configurationHandler: nil)
+//            
+//            _ = UIAlertAction(title: "Modify", style: .default)
+//            {
+//                _ in
+//                //            let textField = alert.textFields![0]
+//                //            let newCategoryEntry = Category(context: self.managedObjectContext)
+//                //            newCategoryEntry.name = textField.text!
+////                self.saveCategoryEntries()
+//            }
+//            _ = UIAlertAction(title: "Delete", style: .default)
+//            {
+//                _ in
+//                print("delete food button pressed this is the index path",indexPath.row)
+//                let deletedItem = self.foodsCategoryList[indexPath.row].id
+//                
+//                self.refFoods.child("foods").child(deletedItem!).removeValue()
+//            }
+//            
+//            _ = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+//            //        alert.addAction(saveAction)
+//            //        alert.addAction(cancelAction)
+//            present(alert, animated: true, completion: nil)
+//        }
     }
     
+    // Text Messaging Stuff
     func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
         dismiss(animated: true, completion: nil)
     }
@@ -287,8 +376,6 @@ class FoodListTableViewController: UITableViewController, AddFoodDelegate, CLLoc
                 DispatchQueue.main.async(execute: {
                     if let downloadedImage = UIImage(data: data!) {
                         self.foodPic = downloadedImage
-                        print("foodpic1",self.foodPic)
-                        print("foodpic download image1",downloadedImage)
                     }
                 })
                 
@@ -302,10 +389,8 @@ class FoodListTableViewController: UITableViewController, AddFoodDelegate, CLLoc
                     
                     let data = UIImagePNGRepresentation(self.foodPic)
 
-                    composeVC.addAttachmentData(data!, typeIdentifier: "image/png", filename: "any.png")
+                    composeVC.addAttachmentData(data!, typeIdentifier: "image/png", filename: "foodtradepic.png")
 
-                    print("foodpic",self.foodPic)
-                    
                     // Present the view controller modally.
                     self.present(composeVC, animated: true, completion: nil)
                     
@@ -316,7 +401,5 @@ class FoodListTableViewController: UITableViewController, AddFoodDelegate, CLLoc
             }).resume()
         }
     }
-    
-
     
 }

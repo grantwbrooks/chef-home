@@ -15,10 +15,14 @@ import FirebaseAuth
 class AddFoodViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, MapViewDelegate {
 
     weak var delegate: AddFoodDelegate?
+    var callingSegue: String?
+    var index: IndexPath?
     var catName = String()
     var latitude = Double()
     var longitude = Double()
     var chefIdent: String = (Auth.auth().currentUser?.uid)!
+    var editFoodItem: FoodModel?
+    var uniqueId: String = ""
     
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var categoryTextField: UITextField!
@@ -34,24 +38,24 @@ class AddFoodViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     
     @IBAction func saveButtonPressed(_ sender: UIBarButtonItem) {
-        let food = ["id": "",
-                    "name": nameTextField.text! as String,
-                    "foodImageURL": foodImage.image!,
-                    "category": categoryTextField.text! as String,
-                    "desc": descriptionTextField.text! as String,
-                    "price": priceTextField.text! as String,
-                    "chef": chefTextField.text! as String,
-                    "chefID": chefIdent as String,
-                    "phoneNumber": phoneTextField.text! as String,
-                    "pickUpLocation": pickUpLocationTextField.text! as String,
-                    "pickUpLatitude": latitude as Double,
-                    "pickUpLongitude": longitude as Double
-            ] as [String : Any]
-        delegate?.addFood(by: self, newFood: food)
-        print("Chef ID", chefIdent)
+        if nameTextField.text != "" && phoneTextField.text != "" && chefTextField.text != "" {
+            let food = ["id": uniqueId as String,
+                        "name": nameTextField.text! as String,
+                        "foodImageURL": foodImage.image!,
+                        "category": categoryTextField.text! as String,
+                        "desc": descriptionTextField.text! as String,
+                        "price": priceTextField.text! as String,
+                        "chef": chefTextField.text! as String,
+                        "chefID": chefIdent as String,
+                        "phoneNumber": phoneTextField.text! as String,
+                        "pickUpLocation": pickUpLocationTextField.text! as String,
+                        "pickUpLatitude": latitude as Double,
+                        "pickUpLongitude": longitude as Double
+                ] as [String : Any]
+            delegate?.addFood(by: self, newFood: food, indexPath: index)
+        }
     }
     
-
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         // The info dictionary may contain multiple representations of the image. You want to use the original.
@@ -74,7 +78,16 @@ class AddFoodViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
     
     
-    @IBAction func selectImageFromPhotoLibrary(_ sender: UITapGestureRecognizer) {
+    @IBAction func selectPhotoFromCamera(_ sender: UIButton) {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.sourceType = .camera
+        imagePickerController.delegate = self
+        imagePickerController.allowsEditing = true
+        present(imagePickerController, animated: true, completion: nil)
+    }
+    
+    
+    @IBAction func selectPhotoFromLibrary(_ sender: UIButton) {
         // UIImagePickerController is a view controller that lets a user pick media from their photo library.
         let imagePickerController = UIImagePickerController()
         // Only allow photos to be picked, not taken.
@@ -84,6 +97,18 @@ class AddFoodViewController: UIViewController, UIImagePickerControllerDelegate, 
         imagePickerController.allowsEditing = true
         present(imagePickerController, animated: true, completion: nil)
     }
+    
+    
+//    @IBAction func selectImageFromPhotoLibrary(_ sender: UITapGestureRecognizer) {
+//        // UIImagePickerController is a view controller that lets a user pick media from their photo library.
+//        let imagePickerController = UIImagePickerController()
+//        // Only allow photos to be picked, not taken.
+//        imagePickerController.sourceType = .photoLibrary
+//        // Make sure ViewController is notified when the user picks an image.
+//        imagePickerController.delegate = self
+//        imagePickerController.allowsEditing = true
+//        present(imagePickerController, animated: true, completion: nil)
+//    }
     
     @IBAction func locationTextPressed(_ sender: UITextField) {
         print("tap tap tap 2")
@@ -100,8 +125,52 @@ class AddFoodViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        categoryTextField.text = catName
-        foodImage.image = #imageLiteral(resourceName: "salad")
+
+        if callingSegue == "editFoodSegue" {
+            uniqueId = (editFoodItem?.id)!
+            categoryTextField.text = editFoodItem?.category
+            nameTextField.text = editFoodItem?.name
+            descriptionTextField.text = editFoodItem?.desc
+            priceTextField.text = editFoodItem?.price
+            chefTextField.text = editFoodItem?.chef
+            phoneTextField.text = editFoodItem?.name
+            pickUpLocationTextField.text = editFoodItem?.pickUpLocation
+            latitude = (editFoodItem?.pickUpLatitude)!
+            longitude = (editFoodItem?.pickUpLongitude)!
+            
+            //VERY PATIENT TO GET YOUR PIC KEEP WAITING
+            let url = URL(string: (editFoodItem?.foodImageURL)!)
+            URLSession.shared.dataTask(with: url!, completionHandler: { (data, response, error) in
+                
+                //download hit an error so lets return out
+                if let error = error {
+                    print(error)
+                    return
+                }
+                
+                DispatchQueue.main.async(execute: {
+                    if let downloadedImage = UIImage(data: data!) {
+                        self.foodImage.image = downloadedImage
+                    }
+                })
+            }).resume()
+            
+            
+            
+            
+            
+        } else {
+            categoryTextField.text = catName
+            foodImage.image = #imageLiteral(resourceName: "salad")
+            nameTextField.text = ""
+            descriptionTextField.text = ""
+            priceTextField.text = ""
+            chefTextField.text = ""
+            phoneTextField.text = ""
+            pickUpLocationTextField.text = ""
+            latitude = 0.0
+            longitude = 0.0
+        }
         
         //money stuff
         priceTextField.addTarget(self, action: #selector(myTextFieldDidChange), for: .editingChanged)

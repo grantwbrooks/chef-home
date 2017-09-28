@@ -9,7 +9,7 @@
 import UIKit
 
 protocol AddFoodDelegate: class {
-    func addFood (by controller: UIViewController, newFood: [String : Any])
+    func addFood (by controller: UIViewController, newFood: [String : Any], indexPath: IndexPath?)
 }
 
 protocol MapViewDelegate: class {
