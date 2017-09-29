@@ -2,16 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSCameraUsageDescription</key>
-	<string>I need to use your camera to take pics of the food you want to sell.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>I need it to calculate your distance to really tasty food!</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>I need it to calculate your distance to tasty food!</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Let us use your food pics!</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
+	<key>CFBundleDisplayName</key>
+	<string>chef@home</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -28,6 +22,14 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>I need to use your camera to take pics of the food you want to sell.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>I need it to calculate your distance to tasty food!</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>I need it to calculate your distance to really tasty food!</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Let us use your food pics!</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -39,8 +41,6 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 </dict>
 </plist>

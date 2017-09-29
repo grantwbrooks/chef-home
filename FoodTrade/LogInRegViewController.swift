@@ -81,8 +81,12 @@ class LogInRegViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        segmentControl.selectedSegmentIndex = 1
-        actionButton.setTitle("Register", for: .normal)
+        segmentControl.layer.cornerRadius = 5
+        segmentControl.selectedSegmentIndex = 0
+        actionButton.setTitle("Login", for: .normal)
+        fullnameText.isHidden = true
+        addressText.isHidden = true
+        phoneText.isHidden = true
 
         //Looks for single or multiple taps.
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")

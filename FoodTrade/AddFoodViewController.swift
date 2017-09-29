@@ -125,15 +125,18 @@ class AddFoodViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        categoryTextField.backgroundColor = UIColor.clear
+        
         if callingSegue == "editFoodSegue" {
+            self.title = "Edit Food"
             uniqueId = (editFoodItem?.id)!
             categoryTextField.text = editFoodItem?.category
             nameTextField.text = editFoodItem?.name
             descriptionTextField.text = editFoodItem?.desc
             priceTextField.text = editFoodItem?.price
             chefTextField.text = editFoodItem?.chef
-            phoneTextField.text = editFoodItem?.name
+            phoneTextField.text = editFoodItem?.phoneNumber
             pickUpLocationTextField.text = editFoodItem?.pickUpLocation
             latitude = (editFoodItem?.pickUpLatitude)!
             longitude = (editFoodItem?.pickUpLongitude)!
@@ -155,11 +158,8 @@ class AddFoodViewController: UIViewController, UIImagePickerControllerDelegate, 
                 })
             }).resume()
             
-            
-            
-            
-            
         } else {
+            self.title = "Create Food"
             categoryTextField.text = catName
             foodImage.image = #imageLiteral(resourceName: "salad")
             nameTextField.text = ""
